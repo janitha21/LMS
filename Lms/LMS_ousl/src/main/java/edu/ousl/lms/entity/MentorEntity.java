@@ -14,7 +14,7 @@ import java.util.List;
 public class MentorEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long mentorId;
 
     private String mentorName;
@@ -24,4 +24,9 @@ public class MentorEntity {
     @OneToMany(mappedBy = "mentor", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<SubjectEntity> subjects; // Foreign key mapping
+
+    //-------
+    @OneToMany(mappedBy = "mentor", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<ChatEntity> chat; // Foreign key mapping
 }

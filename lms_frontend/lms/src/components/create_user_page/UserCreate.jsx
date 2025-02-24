@@ -2,10 +2,10 @@ import { useState } from "react";
 
 const UserCreate = () => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    id: "",
-    contact: "",
-    email: ""
+    studentName: "",
+    identityNumber: "",
+    contactNumber: "",
+    studentEmail: ""
   });
 
   const handleChange = (e) => {
@@ -26,6 +26,7 @@ const UserCreate = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
+        
         });
 
         if (response.ok) {
@@ -58,8 +59,8 @@ const UserCreate = () => {
                 <input
                   type="text"
                   className="form-control"
-                  name="firstName"
-                  value={formData.firstName}
+                  name="studentName"
+                  value={formData.studentName}
                   onChange={handleChange}
                   required
                 />
@@ -70,8 +71,8 @@ const UserCreate = () => {
                 <input
                   type="email"
                   className="form-control"
-                  name="email"
-                  value={formData.email}
+                  name="studentEmail"
+                  value={formData.studentEmail}
                   onChange={handleChange}
                 />
               </div>
@@ -81,8 +82,8 @@ const UserCreate = () => {
                 <input
                   type="text"
                   className="form-control"
-                  name="id"
-                  value={formData.id}
+                  name="identityNumber"
+                  value={formData.identityNumber}
                   onChange={handleChange}
                 />
               </div>
@@ -92,8 +93,8 @@ const UserCreate = () => {
                 <input
                   type="text"
                   className="form-control"
-                  name="contact"
-                  value={formData.contact}
+                  name="contactNumber"
+                  value={formData.contactNumber}
                   onChange={handleChange}
                 />
               </div>

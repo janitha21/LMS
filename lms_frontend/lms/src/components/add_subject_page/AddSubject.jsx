@@ -6,33 +6,58 @@ const AddSubject = () => {
   const [studentEmail, setStudentEmail] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:8080/subject/get-by-id/2") // Change to your API
+    fetch("http://localhost:8080/subject/get-all") 
       .then((response) => response.json())
       .then((data) => setOptions(data))
       .catch((error) => console.error("Error fetching subjects:", error));
   }, []);
 
   // Handle checkbox change
-  function handleChange(event, subjectName) {
-    const checked = event.target.checked; // Check if the checkbox is checked or not
+  function handleChange(event, subjectId) {
+    const checked = event.target.checked; 
 
     setSelected((prevSelected) =>
       checked
-        ? [...prevSelected, subjectName] // Add if checked
-        : prevSelected.filter((subject) => subject !== subjectName) // Remove if unchecked
+        ? [...prevSelected, subjectId] // Add if checked
+        : prevSelected.filter((subject) => subject !== subjectId) // Remove if unchecked
     );
+    
+    
   }
  
-  // Show selected subjects
-  function show() {
+
+  async function show() {
     console.log(selected);
-    console.log(options);
+   // console.log(options);
+     
+    try {
+      const response = await fetch(`http://localhost:8080/subject/add?studentEmail=${studentEmail}
+`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(selected),
+      });
+
+      if (response.ok) {
+        alert("Data saved successfully!");
+        
+      } else {
+        alert("Failed to save data.");
+      }
+    } catch (error) {
+      console.log();
+      
+    }
+ 
+ 
   }
   function setEmail(event) {
     setStudentEmail(event.target.value)
     console.log(studentEmail);
-    
 
+    
     
   }
 
@@ -44,7 +69,7 @@ const AddSubject = () => {
             <input
               className="form-check-input flex-shrink-0"
               type="checkbox"
-              onChange={(e) => handleChange(e, subject.subjectName)} // Pass subjectName to the handler
+              onChange={(e) => handleChange(e, subject.subjectId)} 
             />
             <span>
               {subject.subjectName}

@@ -1,6 +1,7 @@
 package edu.ousl.lms.service.impl;
 
 import edu.ousl.lms.entity.MentorEntity;
+import edu.ousl.lms.model.LogUser;
 import edu.ousl.lms.model.Mentor;
 import edu.ousl.lms.repository.MentorRepository;
 import edu.ousl.lms.service.MentorService;
@@ -22,7 +23,28 @@ public class MentorServiceImpl implements MentorService {
         mentorEntity.setMentorEmail(mentor.getMentorEmail());
         mentorEntity.setMentorPassword(mentor.getMentorPassword());
 
+
         mentorRepository.save(mentorEntity);
+
+
         return null;
+    }
+
+    @Override
+    public MentorEntity checkMentorLog(LogUser logUser) {
+       MentorEntity mentor= mentorRepository.findByMentorEmail(logUser.getEmail());
+
+       if(mentor==null){
+           return null;
+       }
+       else{
+           if(mentor.getMentorPassword().equals(logUser.getPassword())){
+               return mentor;
+           }
+           else {
+               return null;
+           }
+       }
+
     }
 }

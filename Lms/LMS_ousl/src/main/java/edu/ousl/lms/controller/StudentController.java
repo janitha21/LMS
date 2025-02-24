@@ -1,12 +1,13 @@
 package edu.ousl.lms.controller;
 
+import edu.ousl.lms.entity.MentorEntity;
 import edu.ousl.lms.entity.StudentEntity;
 import edu.ousl.lms.model.LogUser;
 import edu.ousl.lms.model.Student;
+import edu.ousl.lms.service.MentorService;
 import edu.ousl.lms.service.StudentService;
 import edu.ousl.lms.service.jwt.JwtUtil;
 import lombok.AllArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import java.util.Map;
 public class StudentController {
 
     final StudentService studentService;
+    final MentorService mentorService;
     @Autowired
     JwtUtil jwtUtil;
 
@@ -36,8 +38,33 @@ public class StudentController {
     @PostMapping("/log")
     public ResponseEntity<Map<String, Object>> checkUserLogin(@RequestBody LogUser logUser){
 
-        //if(logUser.getEmail().startsWith("s") || logUser.getEmail().startsWith("S")){
+        if(logUser.getEmail().startsWith("z") || logUser.getEmail().startsWith("Z")) {
+            MentorEntity mentorEntity =mentorService.checkMentorLog(logUser);
 
+            if(mentorEntity != null){
+                String token = jwtUtil.generateToken(mentorEntity.getMentorEmail(), mentorEntity.getMentorId(), mentorEntity.getMentorName());
+
+                Map<String, Object> response = new HashMap<>();
+                response.put("status", "success");
+                response.put("token", token);
+
+
+
+                return ResponseEntity.ok(response);
+            }
+            else{
+                Map<String, Object> errorResponse = new HashMap<>();
+                errorResponse.put("status", "error");
+                errorResponse.put("message", "Invalid credentials");
+
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+
+            }
+
+        }
+
+
+        else{
               StudentEntity studentEntity=studentService.checkStudentLog(logUser);
 
               if(studentEntity != null){
@@ -62,17 +89,10 @@ public class StudentController {
                   return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
 
 
-
-
-
-
-
-
               }
 
-       // }
+        }
 
-       //return null;
     }
 
 

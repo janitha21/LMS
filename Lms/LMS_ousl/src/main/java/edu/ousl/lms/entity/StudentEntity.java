@@ -1,10 +1,12 @@
 package edu.ousl.lms.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,7 +17,7 @@ import java.util.Set;
 public class StudentEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long studentId;
 
 
@@ -32,4 +34,9 @@ public class StudentEntity {
             inverseJoinColumns = @JoinColumn(name = "subject_id")
     )
     private Set<SubjectEntity> subjects;
+
+    //------
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<ChatEntity> chat; // Foreign key mapping
 }

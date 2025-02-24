@@ -22,12 +22,18 @@ public class SubjectController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/get-by-id/{studentId}")
-    List<SubjectEntity> getSubjectsByStudent(@PathVariable Long studentId){
+    List<SubjectEntity> getSubjectsByStudent(@PathVariable Long studentId,@RequestParam String email){
 
-       return subjectService.getSubjectsByStudent(studentId);
+      if(email.startsWith("z")) {
+          return subjectService.getSubjectsByMentor(studentId);
+      }
+      else{
+          return subjectService.getSubjectsByStudent(studentId);
+      }
 
 
     }
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/add")
     void addSubjectsForStudents(@RequestParam String studentEmail,
                                 @RequestBody Set<String> subjectIds){
@@ -36,5 +42,25 @@ public class SubjectController {
 
         
     }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/get-all")
+    List<SubjectEntity> getAllSubjects(){
+
+        return subjectService.getAllSubjects();
+
+
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/add-by-mentor")
+    void addSubjectForMentor(@RequestBody Subject subject,
+                             @RequestParam long mentorId){
+
+        subjectService.addSubjectForMentor(subject,mentorId);
+
+
+
+    }
+
 
 }

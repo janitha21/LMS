@@ -17,9 +17,23 @@ function Dashboard() {
       try {
         const decodedToken = jwt_decode(token);
         console.log(decodedToken.userID);
+        console.log("email :"+ decodedToken.userEmail);
+        
+        
+        let apiUrl="";
 
+        if(decodedToken.userEmail.startsWith("z")){
+            // Log the final URL
+          console.log("hi");
+          apiUrl=`http://localhost:8080/subject/get-by-id/${decodedToken.userID}?email=${encodeURIComponent(decodedToken.userEmail)}`;
+        }
+        else{
+          apiUrl=`http://localhost:8080/subject/get-by-id/${decodedToken.userID}?email=${encodeURIComponent(decodedToken.userEmail)}`;
 
-        fetch(`http://localhost:8080/subject/get-by-id/${decodedToken.userID}`)
+        }
+        console.log(apiUrl);
+
+        fetch(apiUrl)
           .then(function (response) {
             if (!response.ok) {
               throw new Error("Failed to fetch subjects");
@@ -50,7 +64,10 @@ function Dashboard() {
 
   // Navigate to subject detail page when clicked
   function handleSubjectClick(subjectId) {
-    navigate("/subject/" + subjectId); // Navigate to the SubjectDetail route
+    navigate(`subjects-content/${subjectId}`); // Navigate to the SubjectDetail route
+  }
+  function logout(){
+    localStorage.removeItem("token");
   }
 
   return (
@@ -63,6 +80,7 @@ function Dashboard() {
 
 
     <div className="p-4">
+      <button onClick={logout}>logout</button>
 
       <div className="b-example-divider"></div>
 
@@ -140,11 +158,7 @@ function Dashboard() {
                   />
                 </a>
                 <ul className="dropdown-menu text-small">
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      New project...
-                    </a>
-                  </li>
+                 
                   <li>
                     <a className="dropdown-item" href="#">
                       Settings

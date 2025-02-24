@@ -1,8 +1,22 @@
 import  { useState } from "react";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import { useNavigate } from "react-router-dom";
+
 
 function Sample() {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
+ 
+
+  // Logout function
+  function handleLogout() {
+    localStorage.removeItem("token"); // Remove token
+    navigate("/login"); // Redirect to login page
+  }
 
   // Handle file selection
   const handleFiles = (files) => {
@@ -44,6 +58,41 @@ function Sample() {
   };
 
   return (
+    <>
+    <div className="dropdown">
+      <button
+        className="btn btn-primary dropdown-toggle"
+        type="button"
+        
+        data-bs-toggle="dropdown"
+        
+      >
+        User Menu
+      </button>
+      <ul className={`dropdown-menu }`}>
+        <li>
+          <a className="dropdown-item" href="#">
+            User Details
+          </a>
+        </li>
+        <li>
+          <a className="dropdown-item" href="#">
+            Grades
+          </a>
+        </li>
+        <li>
+          <hr className="dropdown-divider" />
+        </li>
+        <li>
+          <a className="dropdown-item" href="#" onClick={() => alert("Logged out")}>
+            Logout
+          </a>
+        </li>
+      </ul>
+    </div>
+
+
+
     <div className="p-4">
       <h1 className="text-center mb-4">File Upload Dropbox</h1>
 
@@ -83,6 +132,49 @@ function Sample() {
         </div>
       )}
     </div>
+      <div className="container p-4">
+      <header className="d-flex justify-content-between align-items-center">
+        <h2>Dashboard</h2>
+
+        {/* Dropdown (User Menu) */}
+        <div className="dropdown">
+          <button
+            className="btn btn-primary dropdown-toggle"
+            type="button"
+            onClick={() => setIsOpen(!isOpen)}
+            data-bs-toggle="dropdown"
+            aria-expanded={isOpen}
+          >
+            User Menu
+          </button>
+          <ul className={`dropdown-menu ${isOpen ? "show" : ""}`}>
+            <li>
+              <a className="dropdown-item" href="#">
+                User Details
+              </a>
+            </li>
+            <li>
+              <a className="dropdown-item" href="#">
+                Grades
+              </a>
+            </li>
+            <li>
+              <hr className="dropdown-divider" />
+            </li>
+            <li>
+              <a className="dropdown-item" href="#" onClick={handleLogout}>
+                Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </header>
+
+      <div className="mt-4">
+        <p>Welcome to your dashboard!</p>
+      </div>
+    </div>
+    </>
   );
 }
 

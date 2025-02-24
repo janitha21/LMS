@@ -1,8 +1,11 @@
 package edu.ousl.lms.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Setter
 @Getter
@@ -11,16 +14,21 @@ import lombok.Setter;
 public class ContentEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long contentId;
 
     private String title;
-    private String Description;
-    private String link;
+    private String description;
 
     //-------------
     @ManyToOne
     @JoinColumn(name = "subjectId", nullable = false)
     private SubjectEntity subject;
+
+    //-------
+    @OneToMany(mappedBy = "content", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<TaskEntity> tasks; // Foreign key mapping
+
 
 }

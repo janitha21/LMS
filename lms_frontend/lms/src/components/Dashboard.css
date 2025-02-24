@@ -1,114 +1,103 @@
-/* Dashboard.css */
-
 /* Card hover effect */
 .dashboard-card {
-    cursor: pointer;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  border-radius: 12px; /* Slightly more rounded corners */
+  background: #c8c2c2; /* White background */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Softer shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  overflow: hidden;
+  position: relative;
 }
 
 .dashboard-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); /* Increased shadow on hover */
+  background-color: #f8f9fa; /* Light grey background on hover */
+}
+
+/* Card header styling */
+.dashboard-card-header {
+  background: linear-gradient(135deg, #007bff, #6f42c1); /* Gradient background */
+  padding: 16px;
+  color: #151414;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 2px solid #101010;
+}
+
+.dashboard-card-header h3 {
+  margin: 0;
 }
 
 /* Image hover effect */
 .dashboard-image {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: 4px solid #007bff;
-    padding: 8px;
-    transition: transform 0.3s ease;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 4px solid #007bff;
+  padding: 8px;
+  transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
 .dashboard-image:hover {
-    transform: rotate(12deg);
+  transform: rotate(12deg);
+  border-color: #ffc107; /* Change border color on hover */
 }
 
-/* Button styling */
-.dashboard-button {
-    padding: 12px 24px;
-    background-color: #007bff;
-    border-radius: 50px;
-    color: white;
-    font-size: 14px;
-    border: none;
-    transition: background-color 0.2s ease;
+/* Card content styling */
+.dashboard-card-content {
+  padding: 20px;
+  color: #495057;
 }
 
-.dashboard-button:hover {
-    background-color: #0056b3;
-}
-
-/* Card container */
-.dashboard-card-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-    padding: 16px;
-}
-
-/* Text styling */
 .dashboard-heading {
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 8px;
+  font-size: 22px; /* Increased font size */
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #343a40;
 }
 
 .dashboard-description {
-    font-size: 14px;
-    color: #6c757d;
-    margin-bottom: 16px;
+  font-size: 16px;
+  color: #6c757d;
+  margin-bottom: 16px;
 }
 
+.dashboard-button {
+  padding: 12px 24px;
+  background-color: #007bff;
+  border-radius: 50px;
+  color: white;
+  font-size: 14px;
+  border: none;
+  transition: background-color 0.2s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+.dashboard-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Card container (Grid layout) */
+.dashboard-card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  padding: 16px;
+  color: rgb(10, 10, 10);
+}
+
+/* Loading and error styles */
 .dashboard-loading {
-    text-align: center;
-    font-size: 18px;
+  text-align: center;
+  font-size: 18px;
+  color: #007bff;
 }
 
 .dashboard-error {
-    text-align: center;
-    color: #f44336;
-    font-size: 16px;
+  text-align: center;
+  color: #f44336;
+  font-size: 16px;
 }
-/* App.css */
-
-header {
-    background-color: #343a40; /* Dark background color */
-    color: #ffffff; /* White text color */
-  }
-  
-  header a {
-    color: #f8f9fa; /* Light color for links */
-    text-decoration: none;
-  }
-  
-  header a:hover {
-    color: #ffc107; /* Highlighted color for hover state */
-  }
-  
-  header .form-control {
-    border: 1px solid #ced4da; /* Border color for search input */
-    background-color: #495057; /* Darker background for input */
-    color: #ffffff; /* White text color */
-  }
-  
-  header .form-control::placeholder {
-    color: #adb5bd; /* Placeholder text color */
-  }
-  
-  header .dropdown-menu {
-    background-color: #212529; /* Dark dropdown background */
-    color: #ffffff; /* White text for dropdown items */
-  }
-  
-  header .dropdown-item {
-    color: #ffffff; /* White text for dropdown links */
-  }
-  
-  header .dropdown-item:hover {
-    background-color: #495057; /* Highlighted background on hover */
-  }
-  
