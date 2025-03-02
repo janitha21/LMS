@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -32,6 +33,18 @@ public class StudentController {
         Student savedStudent=studentService.saveStudent(student);
 
     }
+
+    public void loadStudentNames() {
+
+        studentService.loadStudentNamesIntoTrie();
+
+    }
+
+    @GetMapping("/search")
+    public List<String> searchStudents(@RequestParam String prefix) {
+        return studentService.getStudentsByPrefix(prefix);
+    }
+
 
 
     @CrossOrigin(origins = "http://localhost:4200")

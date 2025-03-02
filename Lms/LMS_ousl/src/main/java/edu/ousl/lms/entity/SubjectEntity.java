@@ -37,6 +37,10 @@ public class SubjectEntity {
     @JsonIgnore
     private List<ContentEntity> content; // Foreign key mapping
 
+    //--------
+    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<GradeEntity> grades; // Foreign key mapping
 
 
 }

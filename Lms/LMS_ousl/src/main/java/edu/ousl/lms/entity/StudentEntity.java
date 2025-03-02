@@ -39,4 +39,9 @@ public class StudentEntity {
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<ChatEntity> chat; // Foreign key mapping
+
+    //-----
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<GradeEntity> grades; // Foreign key mapping
 }

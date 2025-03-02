@@ -7,12 +7,12 @@ import edu.ousl.lms.repository.ChatRepository;
 import edu.ousl.lms.repository.MentorRepository;
 import edu.ousl.lms.repository.StudentRepository;
 import edu.ousl.lms.service.ChatService;
-import lombok.AllArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 
@@ -20,8 +20,11 @@ public class ChatServiceImpl implements ChatService {
 
     @Autowired
     private ChatRepository chatRepository;
+    @Autowired
     private StudentRepository studentRepository;
+    @Autowired
     private MentorRepository mentorRepository;
+
 
 
    public Long createChat(Long senderId,Long reciverId){

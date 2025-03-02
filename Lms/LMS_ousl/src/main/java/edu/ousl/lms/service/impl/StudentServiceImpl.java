@@ -5,13 +5,25 @@ import edu.ousl.lms.model.LogUser;
 import edu.ousl.lms.model.Student;
 import edu.ousl.lms.repository.StudentRepository;
 import edu.ousl.lms.service.StudentService;
-import lombok.AllArgsConstructor;
+import edu.ousl.lms.service.tree.Trie;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-@AllArgsConstructor
 public class StudentServiceImpl implements StudentService {
-    private final StudentRepository studentRepository;
+
+    @Autowired
+    private StudentRepository studentRepository;
+
+    private final Trie studentTrie;
+
+    public StudentServiceImpl() {
+        studentTrie = new Trie();
+    }
+
+
 
     @Override
     public Student saveStudent(Student student){
@@ -42,5 +54,21 @@ public class StudentServiceImpl implements StudentService {
           }
        }
        return null;
+    }
+
+    @Override
+    public void loadStudentNamesIntoTrie() {
+
+        List<StudentEntity>students=studentRepository.findAll();
+
+        for(StudentEntity student : students){
+
+            studentTrie.insert(student.getStudentName().toLowerCase());
+        }
+    }
+
+    @Override
+    public List<String> getStudentsByPrefix(String prefix) {
+        return studentTrie.findStudentsWithPrefix(prefix.toLowerCase());
     }
 }

@@ -9,10 +9,15 @@ import edu.ousl.lms.repository.MessageRepository;
 import edu.ousl.lms.service.ChatService;
 import edu.ousl.lms.service.MessageService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -20,14 +25,15 @@ public class MessageServiceImpl implements MessageService {
 
     private final MessageRepository messageRepository;
     private final ChatRepository chatRepository;
+    private final ChatService chatService;
 
 
     @Override
     public MessageEntity sendMessage(Message message) {
 
        if(message.getChatId()==null){
-          ChatService chatService=new ChatServiceImpl();
-          Long chatId=chatService.createChat(message.getSenderId(),message.getReciverId());
+          //ChatService chatService=new ChatServiceImpl();
+          Long chatId = chatService.createChat(message.getSenderId(),message.getReciverId());
 
           MessageEntity messageEntity=new MessageEntity();
           messageEntity.setMsg(message.getMsg());
@@ -58,6 +64,14 @@ public class MessageServiceImpl implements MessageService {
            messageRepository.save(messageEntity);
            return messageEntity;
        }
+
+    }
+
+    @Override
+    public Page<MessageEntity> getUserMessages(Long chatId,int page,int size) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "messageId"));
+        return messageRepository.findByChatChatId(chatId,pageable);
 
     }
 }
