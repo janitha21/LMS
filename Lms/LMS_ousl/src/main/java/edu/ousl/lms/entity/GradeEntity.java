@@ -20,7 +20,7 @@ public class GradeEntity {
     private int labMark;
     private int assignmentMark;
     private int attendance;
-    private char grade;
+    private String grade;
 
     @ManyToOne
     @JoinColumn(name = "studentId", nullable = false)
